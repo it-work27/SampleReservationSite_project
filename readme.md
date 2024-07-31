@@ -1,24 +1,34 @@
 【各種ダウンロード】
 1  任意のフォルダにSampleReservationSite_projectをgit clone
+```bash
 https://github.com/it-work27/SampleReservationSite_project.git
-
+```
 2  frontendフォルダにてSampleReservationSite_frontendをgit clone
+```bash
 https://github.com/it-work27/SampleReservationSite_frontend.git
-
+```
 3  backendフォルダにてSampleReservationSite_backendをgit clone
+```bash
 https://github.com/it-work27/SampleReservationSite_backend.git
-
+```
 4  pwdをSampleReservationSite_projectフォルダにして、以下コマンド実行
+```bash
 docker-compose build
 docker-compose up -d
-
+```
 【コンテナセットアップ】
 5  起動したDBコンテナに入り、以下コマンド実行
+```bash
 psql -U user -d postgres -f /app/init.sql 
+```
 6  起動したフロントエンドコンテナに入り、以下コマンド実行
+```bash
 npm run dev
+```
 7  起動したバックエンドコンテナに入り、以下コマンド実行
+```bash
 node server.js
+```
 
 【動作確認】
 8  ブラウザにてlocalhost:30000にアクセス。
