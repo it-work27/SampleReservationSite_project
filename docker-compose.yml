@@ -1,0 +1,42 @@
+services:
+  frontend:
+    image: node:current-alpine3.19
+    tty: true
+    ports:
+      - "127.0.0.1:30000:3000"
+    volumes:
+      - ./frontend/app:/app
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:4000
+
+  backend:
+    image: node:current-alpine3.19
+    tty: true
+    ports:
+      - "127.0.0.1:40000:4000"
+    volumes:
+      - ./backend/app:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/postgres
+    env_file:
+      - .env
+
+  db:
+    image: postgres:14
+    ports:
+      - "127.0.0.1:54320:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./db/app:/app
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+
+volumes:
+  db-data:
