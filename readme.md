@@ -1,4 +1,6 @@
-【各種ダウンロード】
+# README.md
+
+## 各種ダウンロード
 1  任意のフォルダにSampleReservationSite_projectをgit clone
 ```bash
 https://github.com/it-work27/SampleReservationSite_project.git
@@ -16,7 +18,7 @@ https://github.com/it-work27/SampleReservationSite_backend.git
 docker-compose build
 docker-compose up -d
 ```
-【コンテナセットアップ】
+## コンテナセットアップ
 5  起動したDBコンテナに入り、以下コマンド実行
 ```bash
 psql -U user -d postgres -f /app/init.sql 
@@ -30,7 +32,7 @@ npm run dev
 node server.js
 ```
 
-【動作確認】
+## 動作確認
 8  ブラウザにてlocalhost:30000にアクセス。
 9  loginページが表示されるので、"user1" "password1"でログイン
 10 検索画面が表示されるので、各種入力して検索し予約確認画面へ進む
