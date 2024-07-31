@@ -1,0 +1,64 @@
+@startuml
+
+actor ブラウザ
+participant "Frontend" as F
+participant "Backend Proxy" as P
+participant "Backend" as B
+
+ブラウザ -> F : フォーム入力\nusername, password
+F -> F : handleLogin()
+F -> P : POST /api/login\nusername, password
+P -> B : POST /api/login\nusername, password
+
+B -> B : ユーザ情報確認
+B -> B : トークン生成\n(jwt.sign)
+B -> P : 200 OK\n{ token }
+P -> F : 200 OK\n{ token }
+F -> ブラウザ : クッキーにトークン保存
+F -> F : router.replace('/search/cars')
+
+@enduml
+@startuml
+
+actor ブラウザ
+participant "Frontend" as F
+participant "Backend Proxy" as P
+participant "Backend" as B
+
+' ユーザーがフロントエンドで検索条件を入力し、検索をリクエスト
+ブラウザ -> F : 入力フォーム\n(出発日, 返却日, 店舗名, 車種名)
+F -> F : handleSearch()
+F -> P : POST /api/search/cars\n(departureDate, returnDate, shopId, carModelId)
+P -> B : POST /api/search/cars\n(departureDate, returnDate, shopId, carModelId)
+
+' バックエンドで利用可能な車両の検索
+B -> B : 検索クエリ実行
+B -> B : 利用可能な車両IDを取得
+B -> B : 車両詳細情報を取得
+B -> B : searchResultsCacheに保存
+
+' 検索結果をフロントエンドに返す
+B -> P : 200 OK\n(listId, carDetails)
+P -> F : 200 OK\n(listId, carDetails)
+F -> ブラウザ : 検索結果表示
+
+' ユーザーが車両を予約するためのリクエスト
+ブラウザ -> F : 予約ボタン押下
+F -> F : handleReserve()
+F -> P : POST /api/reservation\n(listId, carId, userId)
+P -> B : POST /api/reservation\n(listId, carId, userId)
+
+' バックエンドでの予約確認と確定
+B -> B : トークン認証
+B -> B : reservation_tblロック
+B -> B : 重複チェック
+B -> B : 予約情報のインサート
+B -> B : コミット
+
+' 予約結果をフロントエンドに返す
+B -> P : 201 Created\n(reservationId)
+P -> F : 201 Created\n(reservationId)
+F -> ブラウザ : 予約確定ページ表示
+
+@enduml
+

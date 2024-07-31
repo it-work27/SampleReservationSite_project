@@ -1,0 +1,175 @@
+openapi: 3.0.1
+info:
+  title: Car Rental Service API
+  description: API for searching and reserving cars.
+  version: 1.0.0
+servers:
+  - url: https://example.com/api
+
+paths:
+  /login:
+    post:
+      summary: User login
+      description: Authenticates a user and returns a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Internal server error
+
+  /search/cars:
+    post:
+      summary: Search available cars
+      description: Searches for available cars based on specified criteria.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                departureDate:
+                  type: string
+                  format: date
+                returnDate:
+                  type: string
+                  format: date
+                shopId:
+                  type: string
+                carModelId:
+                  type: string
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  listId:
+                    type: string
+                  carDetails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        carId:
+                          type: integer
+                        shopName:
+                          type: string
+                        carModelName:
+                          type: string
+                        departureDate:
+                          type: string
+                          format: date
+                        returnDate:
+                          type: string
+                          format: date
+                        price:
+                          type: number
+        '400':
+          description: Invalid date range
+        '500':
+          description: Internal server error
+
+  /reservation/{listId}/{carId}:
+    get:
+      summary: Get reservation details
+      description: Retrieves reservation details for a specific car.
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: carId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userName:
+                    type: string
+                  userAddress:
+                    type: string
+                  userEmail:
+                    type: string
+                  departureDate:
+                    type: string
+                    format: date
+                  returnDate:
+                    type: string
+                    format: date
+                  shopName:
+                    type: string
+                  carModelName:
+                    type: string
+                  price:
+                    type: number
+        '404':
+          description: Reservation details not found
+        '500':
+          description: Internal server error
+
+  /reservation:
+    post:
+      summary: Confirm reservation
+      description: Confirms a reservation for a specific car.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                listId:
+                  type: string
+                carId:
+                  type: integer
+                userId:
+                  type: integer
+      responses:
+        '201':
+          description: Reservation confirmed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  reservationId:
+                    type: integer
+        '409':
+          description: Reservation conflict
+        '404':
+          description: Reservation details not found
+        '500':
+          description: Internal server error
