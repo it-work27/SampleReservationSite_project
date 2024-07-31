@@ -5,15 +5,15 @@
 ```bash
 https://github.com/it-work27/SampleReservationSite_project.git
 ```
-1.  frontendフォルダにてSampleReservationSite_frontendをgit clone
+2.  frontendフォルダにてSampleReservationSite_frontendをgit clone
 ```bash
 https://github.com/it-work27/SampleReservationSite_frontend.git
 ```
-1.  backendフォルダにてSampleReservationSite_backendをgit clone
+3.  backendフォルダにてSampleReservationSite_backendをgit clone
 ```bash
 https://github.com/it-work27/SampleReservationSite_backend.git
 ```
-1.  pwdをSampleReservationSite_projectフォルダにして、以下コマンド実行
+4.  pwdをSampleReservationSite_projectフォルダにして、以下コマンド実行
 ```bash
 docker-compose build
 docker-compose up -d
@@ -23,11 +23,11 @@ docker-compose up -d
 ```bash
 psql -U user -d postgres -f /app/init.sql 
 ```
-1.  起動したフロントエンドコンテナに入り、以下コマンド実行
+2.  起動したフロントエンドコンテナに入り、以下コマンド実行
 ```bash
 npm run dev
 ```
-1.  起動したバックエンドコンテナに入り、以下コマンド実行
+3.  起動したバックエンドコンテナに入り、以下コマンド実行
 ```bash
 node server.js
 ```
