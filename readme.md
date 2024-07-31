@@ -1,5 +1,7 @@
 # README.md
 
+# 動作確認方法
+
 ## 各種ダウンロード
 1.  任意のフォルダにSampleReservationSite_projectをgit clone
 ```bash
@@ -43,6 +45,9 @@ node server.js
 - 処理概要としては、ログイン後に車両の予約ができるサイト
 - ユーザーページから予約状況の参照可能
 - projectリポジトリのopenapi.yml、sequence.puには主要な処理概要を記載
+
+### アーキテクチャ
+Next.js + Node.js + postgresql
 
 ### 以下については未対応
 - 予約後のメール通知などは実施しない
